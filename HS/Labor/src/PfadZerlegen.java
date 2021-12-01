@@ -1,5 +1,3 @@
-import java.nio.file.FileSystems;
-import java.nio.file.Path;
 import java.util.Scanner;
 
 public class PfadZerlegen {
@@ -8,24 +6,31 @@ public class PfadZerlegen {
 
         Scanner scanner = new Scanner(System.in);
         System.out.println("Dateipfad: ");
+        String Dateipfad = scanner.nextLine();
 
-        String pathString = scanner.nextLine();
+        String DateipfadConverted = Dateipfad.replace("\\", "/");
+        String[] Split = DateipfadConverted.split("/");
 
-        String extension = "";
-
-        int index = pathString.lastIndexOf('.');
-        if (index > 0) {
-            extension = pathString.substring(index + 1);
-        }
-
-        Path path = FileSystems.getDefault().getPath(pathString);
-
-        String fileName = path.getFileName().toString();
-
-        System.out.println("Verzeichnis: " + path.getParent());
-        System.out.println("Dateiname: " + fileName.replaceAll('.' + extension, ""));
-        System.out.println("Erweiterung: " + extension);
+        Integer NumberOfParts = Split.length;
+        Integer i;
 
         scanner.close();
-    } 
+        System.out.print("Verzeichnis: ");
+        
+        for (i = 0; i < NumberOfParts - 2; i++) {
+            System.out.print(Split[i] + "\\"); 
+        }
+
+        System.out.print(Split[i]);
+
+        i++;
+        String End = Split[i];
+        String[] SplitEnd = End.split("\\.");
+
+        System.out.println();
+        System.out.print("Dateiname: " + SplitEnd[0]);
+        System.out.println();
+        System.out.print("Erweiterung: " + SplitEnd[1]);
+        
+    }  
 }
